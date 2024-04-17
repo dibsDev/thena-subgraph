@@ -1,0 +1,111 @@
+type AccumulativeTokenBalance @entity {
+  id: ID! # tokenAddress + userAddress
+  user: Bytes!
+  token: Bytes!
+  amount: BigInt!
+  lastUpdate: BigInt!
+}
+
+type TotalNotClaimed @entity {
+  id: ID! # tokenAddress
+  token: Bytes!
+  amount: BigInt!
+  lastUpdate: BigInt!
+}
+
+type SwapLog @entity {
+  id: ID! # txHash + logIndex
+  txHash: Bytes!
+  logIndex: BigInt!
+  user: Bytes!
+  tokenIn: Bytes!
+  amountIn: BigInt!
+  volumeInBNB: BigInt!
+  BNBPrice: BigInt!
+  volumeInDollars: BigInt!
+  round: BigInt!
+  stable: Boolean!
+  timestamp: BigInt!
+  referrer: Bytes!
+}
+
+type Lottery @entity {
+  id: ID! # round
+  totalTikets: BigInt!
+  round: BigInt!
+}
+
+type UserLottery @entity {
+  id: ID! # userAddress + round
+  user: Bytes!
+  round: BigInt!
+  tickets: BigInt!
+}
+
+type Referral @entity {
+  id: ID! # userAddress + referralAddress
+  user: Bytes!
+  referrer: Bytes!
+}
+
+type GeneratedVolume @entity {
+  id: ID! # user
+  user: Bytes!
+  amountAsUser: BigInt!
+  amountAsReferrer: BigInt!
+  amountAsGrandparent: BigInt!
+  lastUpdate: BigInt!
+}
+
+type WeeklyGeneratedVolume @entity {
+  id: ID! # user - round (epoch)
+  user: Bytes!
+  amountAsUser: BigInt!
+  amountAsReferrer: BigInt!
+  amountAsGrandparent: BigInt!
+  lastUpdate: BigInt!
+  epoch: BigInt!
+}
+
+type DailyGeneratedVolume @entity {
+  id: ID! # user - round (day)
+  user: Bytes!
+  amountAsUser: BigInt!
+  amountAsReferrer: BigInt!
+  amountAsGrandparent: BigInt!
+  lastUpdate: BigInt!
+  day: BigInt!
+}
+
+type AccumulativeGeneratedVolume @entity {
+  id: ID! # userAddress + timestamp
+  user: Bytes!
+  amountAsUser: BigInt!
+  amountAsReferrer: BigInt!
+  amountAsGrandparent: BigInt!
+  lastUpdate: BigInt!
+}
+
+type Pair @entity {
+  id: ID! # pair address
+  token0: Bytes!
+  token1: Bytes!
+  stable: Boolean!
+}
+
+type TokenToPair @entity {
+  id: ID! # token
+  pairs: [Pair!]! # list of direct pairs
+}
+
+type TokenData @entity {
+  id: ID! # TOKEN_DATA
+  tokens: [Bytes!]! # list of all tokens
+}
+
+type PathToTarget @entity {
+  id: ID! # token address + target
+  token: Bytes!
+  target: Bytes!
+  path: [Bytes!]! # path of pairs
+}
